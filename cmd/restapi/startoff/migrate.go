@@ -15,4 +15,6 @@ func Migrate(engine *core.Engine) {
 		AddForeignKey("role_id", fmt.Sprintf("%v(id)", basmodel.RoleTable), "RESTRICT", "RESTRICT")
 	engine.ActivityDB.Table(basmodel.ActivityTable).AutoMigrate(&basmodel.Activity{})
 
+	engine.DB.Table(basmodel.AccountTable).AutoMigrate(&basmodel.Account{})
+
 }

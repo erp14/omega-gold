@@ -17,6 +17,7 @@ const (
 	Deleted     = "deleted"
 	List        = "list"
 	Fields      = "fields"
+	Type        = "type"
 
 	VCreatedSuccessfully = "%v created successfully"
 	VUpdatedSuccessfully = "%v updated successfully"

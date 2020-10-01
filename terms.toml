@@ -210,6 +210,11 @@ en = 'fields'
 ku = 'fieldakan'
 ar = 'fields'
 
+[type]
+en = 'type'
+ku = 'jor'
+ar = 'type'
+
 ["%v created successfully"]
 en = '%v created successfully'
 ku = '%v ba sarkawtooyi drwst kra'
