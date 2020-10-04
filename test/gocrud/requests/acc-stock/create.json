@@ -1,0 +1,12 @@
+{
+  "method":"post",
+	"url":"_URL_/stocks",
+	"authorization":"Bearer _TOKEN_",
+	"payload": {
+		"name": "Dollar Cash",
+		"type": "cash_currency",
+		"Symbol": "$",
+		"Code": "USD-Cash",
+		"description": "this is description"
+	}
+}

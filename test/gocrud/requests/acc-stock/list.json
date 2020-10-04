@@ -1,0 +1,13 @@
+{
+  "method":"get",
+	"url":"_URL_/stocks?order_by=bas_roles.id&direction=asc&page_size=4&search=1001101000000003",
+	"url":"_URL_/stocks",
+	"url":"_URL_/stocks?search=6934334&order_by=role.id",
+	"url":"_URL_/stocks?search=select%20name",
+	"url":"_URL_/stocks?filter='name2[eq];%20select%20name%20from%20bas_users'",
+	"url":"_URL_/stocks?filter=bas_roles2.name[eq]'admin'",
+	"url":"_URL_/stocks?order_by=bas_roles.id&direction=asc&page_size=4",
+	"url":"_URL_/stocks?select=bas_roles.name,bas_roles.id&lang=ku",
+	"authorization":"Bearer _TOKEN_",
+	"payload": {}
+}

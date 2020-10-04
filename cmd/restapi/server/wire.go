@@ -56,6 +56,12 @@ func initErrDescAPI(e *core.Engine) htmapi.ErrDescAPI {
 }
 
 // Accounting Domain
+func initStockAPI(e *core.Engine) accapi.StockAPI {
+	wire.Build(accrepo.ProvideStockRepo, service.ProvideAccStockService,
+		accapi.ProvideStockAPI)
+	return accapi.StockAPI{}
+}
+
 func initTranAPI(e *core.Engine) accapi.TranAPI {
 	wire.Build(accrepo.ProvideTranRepo, service.ProvideAccTranService,
 		accapi.ProvideTranAPI)

@@ -29,6 +29,7 @@ func InsertRoles(engine *core.Engine) {
 				base.RoleRead, base.RoleWrite, base.RoleExcel,
 				base.AccountRead, base.AccountWrite, base.AccountExcel,
 				accounting.TranRead, accounting.TranWrite, accounting.TranExcel,
+				accounting.StockRead, accounting.StockWrite, accounting.StockExcel,
 			}),
 			Description: "admin has all privileges - do not edit",
 		},

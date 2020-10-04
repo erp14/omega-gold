@@ -27,6 +27,7 @@ func Route(rg gin.RouterGroup, engine *core.Engine) {
 
 	// Accounting Domain
 	accTranAPI := initTranAPI(engine)
+	accStockAPI := initStockAPI(engine)
 
 	rg.POST("/login", basAuthAPI.Login)
 
@@ -68,6 +69,13 @@ func Route(rg gin.RouterGroup, engine *core.Engine) {
 	rg.GET("/activities", access.Check(base.ActivityAll), basActivityAPI.List)
 
 	// Accounting Domain
+	rg.GET("/stocks", access.Check(accounting.StockRead), accStockAPI.List)
+	rg.GET("/stocks/:stockID", access.Check(accounting.StockRead), accStockAPI.FindByID)
+	rg.POST("/stocks", access.Check(accounting.StockWrite), accStockAPI.Create)
+	rg.PUT("/stocks/:stockID", access.Check(accounting.StockWrite), accStockAPI.Update)
+	rg.DELETE("/stocks/:stockID", access.Check(accounting.StockWrite), accStockAPI.Delete)
+	rg.GET("/excel/stocks", access.Check(accounting.StockExcel), accStockAPI.Excel)
+
 	rg.GET("/trans", access.Check(accounting.TranRead), accTranAPI.List)
 	rg.GET("/trans/:tranID", access.Check(accounting.TranRead), accTranAPI.FindByID)
 	rg.POST("/trans", access.Check(accounting.TranWrite), accTranAPI.Create)

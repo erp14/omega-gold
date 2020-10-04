@@ -10,4 +10,11 @@ const (
 	ListTran   types.Event = "tran-list"
 	ViewTran   types.Event = "tran-view"
 	ExcelTran  types.Event = "tran-excel"
+
+	CreateStock types.Event = "stock-create"
+	UpdateStock types.Event = "stock-update"
+	DeleteStock types.Event = "stock-delete"
+	ListStock   types.Event = "stock-list"
+	ViewStock   types.Event = "stock-view"
+	ExcelStock  types.Event = "stock-excel"
 )

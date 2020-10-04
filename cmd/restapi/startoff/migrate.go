@@ -19,6 +19,7 @@ func Migrate(engine *core.Engine) {
 	engine.DB.Table(basmodel.AccountTable).AutoMigrate(&basmodel.Account{})
 
 	// Accounting Domain
+	engine.DB.Table(accmodel.StockTable).AutoMigrate(&accmodel.Stock{})
 	engine.DB.Table(accmodel.TranTable).AutoMigrate(&accmodel.Tran{}).
 		AddForeignKey("pioneer_id", "bas_accounts(id)", "RESTRICT", "RESTRICT").
 		AddForeignKey("follower_id", "bas_accounts(id)", "RESTRICT", "RESTRICT")

@@ -215,6 +215,11 @@ en = 'type'
 ku = 'jor'
 ar = 'type'
 
+[code]
+en = 'code'
+ku = 'code'
+ar = 'code'
+
 ["%v created successfully"]
 en = '%v created successfully'
 ku = '%v ba sarkawtooyi drwst kra'
@@ -304,3 +309,18 @@ ar = 'transaction'
 en = 'transactions'
 ku = 'transactions'
 ar = 'transactions'
+
+["stock"]
+en = 'stock'
+ku = 'stock'
+ar = 'stock'
+
+["stocks"]
+en = 'stocks'
+ku = 'stocks'
+ar = 'stocks'
+
+["symbol"]
+en = 'symbol'
+ku = 'symbol'
+ar = 'symbol'

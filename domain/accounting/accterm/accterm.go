@@ -4,4 +4,9 @@ package accterm
 const (
 	Tran  = "transaction"
 	Trans = "transactions"
+
+	Stock  = "stock"
+	Stocks = "stocks"
+
+	Symbol = "symbol"
 )
