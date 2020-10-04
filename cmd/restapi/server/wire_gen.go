@@ -79,3 +79,10 @@ func initTranAPI(e *core.Engine) accapi.TranAPI {
 	tranAPI := accapi.ProvideTranAPI(accTranServ)
 	return tranAPI
 }
+
+func initSlotAPI(e *core.Engine) accapi.SlotAPI {
+	slotRepo := accrepo.ProvideSlotRepo(e)
+	accSlotServ := service.ProvideAccSlotService(slotRepo)
+	slotAPI := accapi.ProvideSlotAPI(accSlotServ)
+	return slotAPI
+}

@@ -9,4 +9,7 @@ const (
 	Stocks = "stocks"
 
 	Symbol = "symbol"
+
+	Slot  = "slot"
+	Slots = "slots"
 )

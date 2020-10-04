@@ -13,4 +13,8 @@ const (
 	TranRead  types.Resource = "tran:read"
 	TranWrite types.Resource = "tran:write"
 	TranExcel types.Resource = "tran:excel"
+
+	SlotRead  types.Resource = "slot:read"
+	SlotWrite types.Resource = "slot:write"
+	SlotExcel types.Resource = "slot:excel"
 )

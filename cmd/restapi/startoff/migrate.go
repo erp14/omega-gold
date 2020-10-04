@@ -13,7 +13,8 @@ func Migrate(engine *core.Engine) {
 	engine.DB.Table(basmodel.SettingTable).AutoMigrate(&basmodel.Setting{})
 	engine.DB.Table(basmodel.RoleTable).AutoMigrate(&basmodel.Role{})
 	engine.DB.Table(basmodel.UserTable).AutoMigrate(&basmodel.User{}).
-		AddForeignKey("role_id", fmt.Sprintf("%v(id)", basmodel.RoleTable), "RESTRICT", "RESTRICT")
+		AddForeignKey("role_id", fmt.Sprintf("%v(id)", basmodel.RoleTable), "RESTRICT", "RESTRICT").
+		AddForeignKey("id", "bas_accounts(id)", "RESTRICT", "RESTRICT")
 	engine.ActivityDB.Table(basmodel.ActivityTable).AutoMigrate(&basmodel.Activity{})
 
 	engine.DB.Table(basmodel.AccountTable).AutoMigrate(&basmodel.Account{})
@@ -24,5 +25,9 @@ func Migrate(engine *core.Engine) {
 		AddForeignKey("pioneer_id", "bas_accounts(id)", "RESTRICT", "RESTRICT").
 		AddForeignKey("follower_id", "bas_accounts(id)", "RESTRICT", "RESTRICT")
 	// AddForeignKey("trade_id", "(id)", "RESTRICT", "RESTRICT")
+	engine.DB.Table(accmodel.SlotTable).AutoMigrate(&accmodel.Slot{}).
+		AddForeignKey("account_id", "bas_accounts(id)", "RESTRICT", "RESTRICT").
+		AddForeignKey("tran_id", "acc_trans(id)", "RESTRICT", "RESTRICT").
+		AddForeignKey("stock_id", "acc_stocks(id)", "RESTRICT", "RESTRICT")
 
 }

@@ -324,3 +324,13 @@ ar = 'stocks'
 en = 'symbol'
 ku = 'symbol'
 ar = 'symbol'
+
+["slot"]
+en = 'slot'
+ku = 'slot'
+ar = 'slot'
+
+["slots"]
+en = 'slots'
+ku = 'slots'
+ar = 'slots'

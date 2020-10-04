@@ -28,6 +28,7 @@ func Route(rg gin.RouterGroup, engine *core.Engine) {
 	// Accounting Domain
 	accTranAPI := initTranAPI(engine)
 	accStockAPI := initStockAPI(engine)
+	accSlotAPI := initSlotAPI(engine)
 
 	rg.POST("/login", basAuthAPI.Login)
 
@@ -82,5 +83,12 @@ func Route(rg gin.RouterGroup, engine *core.Engine) {
 	rg.PUT("/trans/:tranID", access.Check(accounting.TranWrite), accTranAPI.Update)
 	rg.DELETE("/trans/:tranID", access.Check(accounting.TranWrite), accTranAPI.Delete)
 	rg.GET("/excel/trans", access.Check(accounting.TranExcel), accTranAPI.Excel)
+
+	rg.GET("/slots", access.Check(accounting.SlotRead), accSlotAPI.List)
+	rg.GET("/slots/:slotID", access.Check(accounting.SlotRead), accSlotAPI.FindByID)
+	rg.POST("/slots", access.Check(accounting.SlotWrite), accSlotAPI.Create)
+	rg.PUT("/slots/:slotID", access.Check(accounting.SlotWrite), accSlotAPI.Update)
+	rg.DELETE("/slots/:slotID", access.Check(accounting.SlotWrite), accSlotAPI.Delete)
+	rg.GET("/excel/slots", access.Check(accounting.SlotExcel), accSlotAPI.Excel)
 
 }
