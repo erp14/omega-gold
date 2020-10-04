@@ -12,6 +12,8 @@ const (
 	Trader   types.Enum = "trader"
 	Provider types.Enum = "provider"
 	Cashier  types.Enum = "cashier"
+	Fee      types.Enum = "fee"
+	Fixer    types.Enum = "fixer"
 )
 
 var List = []types.Enum{
@@ -21,6 +23,8 @@ var List = []types.Enum{
 	Trader,
 	Provider,
 	Cashier,
+	Fee,
+	Fixer,
 }
 
 // Join make a string for showing in the api

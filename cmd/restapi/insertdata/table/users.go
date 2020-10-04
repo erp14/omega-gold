@@ -16,7 +16,7 @@ func InsertUsers(engine *core.Engine) {
 	userService := service.ProvideBasUserService(userRepo)
 	users := []basmodel.User{
 		{
-			ID:       1,
+			ID:       11,
 			RoleID:   1,
 			Name:     engine.Envs[base.AdminUsername],
 			Username: engine.Envs[base.AdminUsername],
@@ -24,7 +24,7 @@ func InsertUsers(engine *core.Engine) {
 			Lang:     dict.Ku,
 		},
 		{
-			ID:       2,
+			ID:       12,
 			RoleID:   2,
 			Name:     "cashier",
 			Username: "cashier",
@@ -32,7 +32,7 @@ func InsertUsers(engine *core.Engine) {
 			Lang:     dict.En,
 		},
 		{
-			ID:       3,
+			ID:       13,
 			RoleID:   3,
 			Name:     "reader",
 			Username: "reader",
