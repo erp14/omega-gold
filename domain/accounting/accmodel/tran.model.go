@@ -1,7 +1,7 @@
-package basmodel
+package accmodel
 
 import (
-	"omega/domain/base/enum/accounttype"
+	"omega/domain/accounting/enum/trantype"
 	"omega/internal/core/coract"
 	"omega/internal/core/corerr"
 	"omega/internal/core/corterm"
@@ -11,21 +11,24 @@ import (
 	"omega/pkg/limberr"
 )
 
-// AccountTable is used inside the repo layer
+// TranTable is used inside the repo layer
 const (
-	AccountTable = "bas_accounts"
+	TranTable = "acc_trans"
 )
 
-// Account model
-type Account struct {
+// Tran model
+type Tran struct {
 	types.GormCol
-	Name   string     `gorm:"not null;unique" json:"name,omitempty"`
-	Type   types.Enum `json:"type,omitempty"`
-	Status types.Enum `json:"status,omitempty"`
+	PioneerID   types.RowID `json:"pioneer_id,omitempty"`
+	FollowerID  types.RowID `json:"follower_id,omitempty"`
+	Hash        string      `json:"hash,omitempty"`
+	Type        types.Enum  `json:"type,omitempty"`
+	Description string      `json:"description,omitempty"`
+	TradeID     types.RowID `json:"trade_id,omitempty"`
 }
 
 // Validate check the type of fields
-func (p *Account) Validate(act coract.Action) (err error) {
+func (p *Tran) Validate(act coract.Action) (err error) {
 
 	// switch act {
 	// case coract.Save:
@@ -55,14 +58,14 @@ func (p *Account) Validate(act coract.Action) (err error) {
 	// }
 
 	// TODO: it should be checked after API has been created
-	if ok, _ := helper.Includes(accounttype.List, p.Type); !ok {
+	if ok, _ := helper.Includes(trantype.List, p.Type); !ok {
 		// var str []string
 		// for _, v := range dict.Langs {
 		// 	str = append(str, string(v))
 		// }
 		return limberr.AddInvalidParam(err, "type",
 			corerr.AcceptedValueForVareV, dict.R(corterm.Type),
-			accounttype.Join())
+			trantype.Join())
 	}
 
 	return err

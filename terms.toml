@@ -293,3 +293,14 @@ ar = 'column %v not not exist'
 en = 'filter is not valid'
 ku = 'filter halaya'
 ar = 'filter is not valid'
+
+# domain/accounting/accterm/accterm.go --------------------------------------------------
+["transaction"]
+en = 'transaction'
+ku = 'transaction'
+ar = 'transaction'
+
+["transactions"]
+en = 'transactions'
+ku = 'transactions'
+ar = 'transactions'

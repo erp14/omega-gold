@@ -2,6 +2,7 @@ package server
 
 import (
 	"net/http"
+	"omega/domain/accounting"
 	"omega/domain/base"
 	"omega/domain/base/basmid"
 	"omega/internal/core"
@@ -23,6 +24,9 @@ func Route(rg gin.RouterGroup, engine *core.Engine) {
 	htmErrDescAPI := initErrDescAPI(engine)
 	rg.GET("/error-list", htmErrDescAPI.List)
 	rg.StaticFS("/public", http.Dir("public"))
+
+	// Accounting Domain
+	accTranAPI := initTranAPI(engine)
 
 	rg.POST("/login", basAuthAPI.Login)
 
@@ -62,5 +66,13 @@ func Route(rg gin.RouterGroup, engine *core.Engine) {
 	rg.GET("/excel/users", access.Check(base.UserExcel), basUserAPI.Excel)
 
 	rg.GET("/activities", access.Check(base.ActivityAll), basActivityAPI.List)
+
+	// Accounting Domain
+	rg.GET("/trans", access.Check(accounting.TranRead), accTranAPI.List)
+	rg.GET("/trans/:tranID", access.Check(accounting.TranRead), accTranAPI.FindByID)
+	rg.POST("/trans", access.Check(accounting.TranWrite), accTranAPI.Create)
+	rg.PUT("/trans/:tranID", access.Check(accounting.TranWrite), accTranAPI.Update)
+	rg.DELETE("/trans/:tranID", access.Check(accounting.TranWrite), accTranAPI.Delete)
+	rg.GET("/excel/trans", access.Check(accounting.TranExcel), accTranAPI.Excel)
 
 }

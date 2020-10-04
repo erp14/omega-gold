@@ -6,6 +6,8 @@
 package server
 
 import (
+	"omega/domain/accounting/accapi"
+	"omega/domain/accounting/accrepo"
 	"omega/domain/base/basapi"
 	"omega/domain/base/basrepo"
 	"omega/domain/html/htmapi"
@@ -61,4 +63,12 @@ func initAccountAPI(e *core.Engine) basapi.AccountAPI {
 func initErrDescAPI(e *core.Engine) htmapi.ErrDescAPI {
 	errDescAPI := htmapi.GenErrDescAPI(e)
 	return errDescAPI
+}
+
+// Accounting Domain
+func initTranAPI(e *core.Engine) accapi.TranAPI {
+	tranRepo := accrepo.ProvideTranRepo(e)
+	accTranServ := service.ProvideAccTranService(tranRepo)
+	tranAPI := accapi.ProvideTranAPI(accTranServ)
+	return tranAPI
 }

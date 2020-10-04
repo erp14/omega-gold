@@ -18,6 +18,7 @@ func InsertUsers(engine *core.Engine) {
 		{
 			ID:       1,
 			RoleID:   1,
+			Name:     engine.Envs[base.AdminUsername],
 			Username: engine.Envs[base.AdminUsername],
 			Password: engine.Envs[base.AdminPassword],
 			Lang:     dict.Ku,
@@ -25,6 +26,7 @@ func InsertUsers(engine *core.Engine) {
 		{
 			ID:       2,
 			RoleID:   2,
+			Name:     "cashier",
 			Username: "cashier",
 			Password: "cashier2020",
 			Lang:     dict.En,
@@ -32,6 +34,7 @@ func InsertUsers(engine *core.Engine) {
 		{
 			ID:       3,
 			RoleID:   3,
+			Name:     "reader",
 			Username: "reader",
 			Password: "reader2020",
 			Lang:     dict.Ar,

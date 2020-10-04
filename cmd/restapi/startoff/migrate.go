@@ -2,6 +2,7 @@ package startoff
 
 import (
 	"fmt"
+	"omega/domain/accounting/accmodel"
 	"omega/domain/base/basmodel"
 	"omega/internal/core"
 )
@@ -16,5 +17,11 @@ func Migrate(engine *core.Engine) {
 	engine.ActivityDB.Table(basmodel.ActivityTable).AutoMigrate(&basmodel.Activity{})
 
 	engine.DB.Table(basmodel.AccountTable).AutoMigrate(&basmodel.Account{})
+
+	// Accounting Domain
+	engine.DB.Table(accmodel.TranTable).AutoMigrate(&accmodel.Tran{}).
+		AddForeignKey("pioneer_id", "bas_accounts(id)", "RESTRICT", "RESTRICT").
+		AddForeignKey("follower_id", "bas_accounts(id)", "RESTRICT", "RESTRICT")
+	// AddForeignKey("trade_id", "(id)", "RESTRICT", "RESTRICT")
 
 }

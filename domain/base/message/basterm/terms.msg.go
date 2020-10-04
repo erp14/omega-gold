@@ -1,5 +1,6 @@
 package basterm
 
+// List of messages and errors for base domain
 const (
 	Role     = "role"
 	Roles    = "roles"

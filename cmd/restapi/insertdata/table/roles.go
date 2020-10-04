@@ -1,6 +1,7 @@
 package table
 
 import (
+	"omega/domain/accounting"
 	"omega/domain/base"
 	"omega/domain/base/basmodel"
 	"omega/domain/base/basrepo"
@@ -27,7 +28,7 @@ func InsertRoles(engine *core.Engine) {
 				base.ActivitySelf, base.ActivityAll,
 				base.RoleRead, base.RoleWrite, base.RoleExcel,
 				base.AccountRead, base.AccountWrite, base.AccountExcel,
-				// base.Ping,
+				accounting.TranRead, accounting.TranWrite, accounting.TranExcel,
 			}),
 			Description: "admin has all privileges - do not edit",
 		},

@@ -1,0 +1,10 @@
+{
+  "method":"put",
+	"url":"_URL_/trans/4",
+	"authorization":"Bearer _TOKEN_",
+	"payload": {
+		"pioneer_id": 1,
+		"follower_id": 2,
+		"description": "this is description"
+	}
+}
