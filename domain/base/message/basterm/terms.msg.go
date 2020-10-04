@@ -11,6 +11,7 @@ const (
 	Account  = "account"
 	Accounts = "accounts"
 
-	UserLogedInSuccessfully = "user loged in successfully"
-	UsernameAndPassword     = "username and password"
+	UserLogedInSuccessfully    = "user loged in successfully"
+	UsernameAndPassword        = "username and password"
+	UserRegisteredSuccessfully = "user registered successfully"
 )

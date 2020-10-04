@@ -54,7 +54,17 @@ func InsertRoles(engine *core.Engine) {
 				base.UserRead, base.UserExcel,
 				base.RoleRead, base.RoleExcel,
 			}),
-			Description: "Reade can see all part without changes",
+			Description: "Reader can see all part without changes",
+		},
+		{
+			GormCol: types.GormCol{
+				ID: 4,
+			},
+			Name: "Registered",
+			Resources: types.ResourceJoin([]types.Resource{
+				base.UserRead,
+			}),
+			Description: "permission after register to the system",
 		},
 	}
 

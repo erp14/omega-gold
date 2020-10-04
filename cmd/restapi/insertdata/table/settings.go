@@ -2,6 +2,7 @@ package table
 
 import (
 	"omega/cmd/restapi/enum/settingfields"
+	"omega/domain/base"
 	"omega/domain/base/basmodel"
 	"omega/domain/base/basrepo"
 	"omega/domain/service"
@@ -21,7 +22,7 @@ func InsertSettings(engine *core.Engine) {
 				ID: 1,
 			},
 			Property:    settingfields.CompanyName,
-			Value:       "item",
+			Value:       "ERP14",
 			Type:        "string",
 			Description: "company's name in the header of invoices",
 		},
@@ -60,6 +61,15 @@ func InsertSettings(engine *core.Engine) {
 			Value:       "location_year_series",
 			Type:        "string",
 			Description: "location_year_series, location_series, series, year_series, fullyear_series, location_fullyear_series",
+		},
+		{
+			GormCol: types.GormCol{
+				ID: 6,
+			},
+			Property:    base.DefaultRegisteredRole,
+			Value:       "diako",
+			Type:        "number",
+			Description: "after people register they role_id should equal to 4 which is 'registered'",
 		},
 	}
 

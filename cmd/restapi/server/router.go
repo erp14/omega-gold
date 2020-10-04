@@ -31,6 +31,7 @@ func Route(rg gin.RouterGroup, engine *core.Engine) {
 	accSlotAPI := initSlotAPI(engine)
 
 	rg.POST("/login", basAuthAPI.Login)
+	rg.POST("/register", basAuthAPI.Register)
 
 	rg.Use(basmid.AuthGuard(engine))
 	access := basmid.NewAccessMid(engine)

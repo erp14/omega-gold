@@ -37,4 +37,5 @@ const (
 	BasLogin    types.Event = "login"
 	BasLogout   types.Event = "logout"
 	LoginFailed types.Event = "login-failed"
+	Register    types.Event = "register"
 )

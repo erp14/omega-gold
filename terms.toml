@@ -288,6 +288,11 @@ en = 'username and password'
 ku = 'username w password'
 ar = 'username and password'
 
+["user registered successfully"]
+en = 'user registered successfully'
+ku = 'user ba sarkawtooyi register boo'
+ar = 'user registered successfully'
+
 # pkg/filter/parser.go ------------------------------------------------------------------
 ["column %v not not exist"]
 en = 'column %v not not exist'
