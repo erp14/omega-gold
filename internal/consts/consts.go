@@ -12,4 +12,6 @@ const (
 
 	// TemporaryTokenDuration = 100 * 100000 //in seconds
 	TemporaryTokenDuration = 10
+
+	HashTimeLayout = "060102150405.000000"
 )

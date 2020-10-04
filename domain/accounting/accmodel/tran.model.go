@@ -21,10 +21,13 @@ type Tran struct {
 	types.GormCol
 	PioneerID   types.RowID `json:"pioneer_id,omitempty"`
 	FollowerID  types.RowID `json:"follower_id,omitempty"`
-	Hash        string      `json:"hash,omitempty"`
+	CreatedBy   types.RowID `json:"created_by,omitempty"`
+	Hash        string      `gorm:"unique" json:"hash,omitempty"`
 	Type        types.Enum  `json:"type,omitempty"`
 	Description string      `json:"description,omitempty"`
 	TradeID     types.RowID `json:"trade_id,omitempty"`
+	Amount      float64     `sql:"-" json:"amount,omitempty"`
+	StockID     types.RowID `sql:"-" json:"stock_id,omitempty"`
 }
 
 // Validate check the type of fields

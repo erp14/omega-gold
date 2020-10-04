@@ -60,6 +60,15 @@ func (p *AccSlotServ) Create(slot accmodel.Slot) (createdSlot accmodel.Slot, err
 		return
 	}
 
+	var lastSlot accmodel.Slot
+	if lastSlot, err = p.Repo.LastSlot(slot.AccountID, slot.StockID); err != nil {
+		err = corerr.Tick(err, "E6741424", "last slot not found", slot)
+		return
+	}
+
+	adjust := slot.Debit - slot.Credit
+	slot.Balance = lastSlot.Balance + adjust
+
 	if createdSlot, err = p.Repo.Create(slot); err != nil {
 		err = corerr.Tick(err, "E6734399", "slot not created", slot)
 		return
@@ -69,34 +78,34 @@ func (p *AccSlotServ) Create(slot accmodel.Slot) (createdSlot accmodel.Slot, err
 }
 
 // Save a slot, if it is exist update it, if not create it
-func (p *AccSlotServ) Save(slot accmodel.Slot) (savedSlot accmodel.Slot, err error) {
-	if err = slot.Validate(coract.Save); err != nil {
-		err = corerr.TickValidate(err, "E6795506", corerr.ValidationFailed, slot)
-		return
-	}
+// func (p *AccSlotServ) Save(slot accmodel.Slot) (savedSlot accmodel.Slot, err error) {
+// 	if err = slot.Validate(coract.Save); err != nil {
+// 		err = corerr.TickValidate(err, "E6795506", corerr.ValidationFailed, slot)
+// 		return
+// 	}
 
-	if savedSlot, err = p.Repo.Save(slot); err != nil {
-		err = corerr.Tick(err, "E6793602", "slot not saved")
-		return
-	}
+// 	if savedSlot, err = p.Repo.Save(slot); err != nil {
+// 		err = corerr.Tick(err, "E6793602", "slot not saved")
+// 		return
+// 	}
 
-	return
-}
+// 	return
+// }
 
 // Delete slot, it is soft delete
-func (p *AccSlotServ) Delete(slotID types.RowID) (slot accmodel.Slot, err error) {
-	if slot, err = p.FindByID(slotID); err != nil {
-		err = corerr.Tick(err, "E6782480", "slot not found for deleting")
-		return
-	}
+// func (p *AccSlotServ) Delete(slotID types.RowID) (slot accmodel.Slot, err error) {
+// 	if slot, err = p.FindByID(slotID); err != nil {
+// 		err = corerr.Tick(err, "E6782480", "slot not found for deleting")
+// 		return
+// 	}
 
-	if err = p.Repo.Delete(slot); err != nil {
-		err = corerr.Tick(err, "E6715070", "slot not deleted")
-		return
-	}
+// 	if err = p.Repo.Delete(slot); err != nil {
+// 		err = corerr.Tick(err, "E6715070", "slot not deleted")
+// 		return
+// 	}
 
-	return
-}
+// 	return
+// }
 
 // Excel is used for export excel file
 func (p *AccSlotServ) Excel(params param.Param) (slots []accmodel.Slot, err error) {

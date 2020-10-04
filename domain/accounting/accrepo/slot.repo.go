@@ -14,6 +14,8 @@ import (
 	"omega/pkg/helper"
 	"omega/pkg/limberr"
 	"reflect"
+
+	"github.com/jinzhu/gorm"
 )
 
 // SlotRepo for injecting engine
@@ -35,6 +37,23 @@ func (p *SlotRepo) FindByID(id types.RowID) (slot accmodel.Slot, err error) {
 	err = p.Engine.DB.Table(accmodel.SlotTable).First(&slot, id.ToUint64()).Error
 
 	slot.ID = id
+	err = p.dbError(err, "E6739358", slot, corterm.List)
+
+	return
+}
+
+// LastSlot return last balance for the account
+func (p *SlotRepo) LastSlot(accountID, stockID types.RowID) (slot accmodel.Slot, err error) {
+	err = p.Engine.DB.Table(accmodel.SlotTable).
+		Where("account_id = ? && stock_id = ?", accountID, stockID).
+		Find(&slot).Error
+
+	if gorm.IsRecordNotFoundError(err) {
+		err = nil
+	}
+
+	slot.AccountID = accountID
+	slot.StockID = stockID
 	err = p.dbError(err, "E6739358", slot, corterm.List)
 
 	return
@@ -83,14 +102,14 @@ func (p *SlotRepo) Count(params param.Param) (count uint64, err error) {
 }
 
 // Save the slot, in case it is not exist create it
-func (p *SlotRepo) Save(slot accmodel.Slot) (u accmodel.Slot, err error) {
-	if err = p.Engine.DB.Table(accmodel.SlotTable).Save(&slot).Error; err != nil {
-		err = p.dbError(err, "E6760034", slot, corterm.Updated)
-	}
+// func (p *SlotRepo) Save(slot accmodel.Slot) (u accmodel.Slot, err error) {
+// 	if err = p.Engine.DB.Table(accmodel.SlotTable).Save(&slot).Error; err != nil {
+// 		err = p.dbError(err, "E6760034", slot, corterm.Updated)
+// 	}
 
-	p.Engine.DB.Table(accmodel.SlotTable).Where("id = ?", slot.ID).Find(&u)
-	return
-}
+// 	p.Engine.DB.Table(accmodel.SlotTable).Where("id = ?", slot.ID).Find(&u)
+// 	return
+// }
 
 // Create a slot
 func (p *SlotRepo) Create(slot accmodel.Slot) (u accmodel.Slot, err error) {
@@ -101,12 +120,12 @@ func (p *SlotRepo) Create(slot accmodel.Slot) (u accmodel.Slot, err error) {
 }
 
 // Delete the slot
-func (p *SlotRepo) Delete(slot accmodel.Slot) (err error) {
-	if err = p.Engine.DB.Table(accmodel.SlotTable).Unscoped().Delete(&slot).Error; err != nil {
-		err = p.dbError(err, "E6727122", slot, corterm.Deleted)
-	}
-	return
-}
+// func (p *SlotRepo) Delete(slot accmodel.Slot) (err error) {
+// 	if err = p.Engine.DB.Table(accmodel.SlotTable).Unscoped().Delete(&slot).Error; err != nil {
+// 		err = p.dbError(err, "E6727122", slot, corterm.Deleted)
+// 	}
+// 	return
+// }
 
 // dbError is an internal method for generate proper database error
 func (p *SlotRepo) dbError(err error, code string, slot accmodel.Slot, action string) error {

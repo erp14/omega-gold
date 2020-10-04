@@ -86,56 +86,56 @@ func (p *SlotAPI) Create(c *gin.Context) {
 }
 
 // Update slot
-func (p *SlotAPI) Update(c *gin.Context) {
-	resp := response.New(p.Engine, c, accounting.Domain)
-	var err error
+// func (p *SlotAPI) Update(c *gin.Context) {
+// 	resp := response.New(p.Engine, c, accounting.Domain)
+// 	var err error
 
-	var slot, slotBefore, slotUpdated accmodel.Slot
+// 	var slot, slotBefore, slotUpdated accmodel.Slot
 
-	if slot.ID, err = resp.GetRowID(c.Param("slotID"), "E6746218", accterm.Slot); err != nil {
-		return
-	}
+// 	if slot.ID, err = resp.GetRowID(c.Param("slotID"), "E6746218", accterm.Slot); err != nil {
+// 		return
+// 	}
 
-	if err = resp.Bind(&slot, "E6733638", accounting.Domain, accterm.Slot); err != nil {
-		return
-	}
+// 	if err = resp.Bind(&slot, "E6733638", accounting.Domain, accterm.Slot); err != nil {
+// 		return
+// 	}
 
-	if slotBefore, err = p.Service.FindByID(slot.ID); err != nil {
-		resp.Error(err).JSON()
-		return
-	}
+// 	if slotBefore, err = p.Service.FindByID(slot.ID); err != nil {
+// 		resp.Error(err).JSON()
+// 		return
+// 	}
 
-	if slotUpdated, err = p.Service.Save(slot); err != nil {
-		resp.Error(err).JSON()
-		return
-	}
+// 	if slotUpdated, err = p.Service.Save(slot); err != nil {
+// 		resp.Error(err).JSON()
+// 		return
+// 	}
 
-	resp.Record(accounting.UpdateSlot, slotBefore, slot)
-	resp.Status(http.StatusOK).
-		MessageT(corterm.VUpdatedSuccessfully, accterm.Slot).
-		JSON(slotUpdated)
-}
+// 	resp.Record(accounting.UpdateSlot, slotBefore, slot)
+// 	resp.Status(http.StatusOK).
+// 		MessageT(corterm.VUpdatedSuccessfully, accterm.Slot).
+// 		JSON(slotUpdated)
+// }
 
 // Delete slot
-func (p *SlotAPI) Delete(c *gin.Context) {
-	resp := response.New(p.Engine, c, accounting.Domain)
-	var err error
-	var slot accmodel.Slot
+// func (p *SlotAPI) Delete(c *gin.Context) {
+// 	resp := response.New(p.Engine, c, accounting.Domain)
+// 	var err error
+// 	var slot accmodel.Slot
 
-	if slot.ID, err = resp.GetRowID(c.Param("slotID"), "E6737806", accterm.Slot); err != nil {
-		return
-	}
+// 	if slot.ID, err = resp.GetRowID(c.Param("slotID"), "E6737806", accterm.Slot); err != nil {
+// 		return
+// 	}
 
-	if slot, err = p.Service.Delete(slot.ID); err != nil {
-		resp.Error(err).JSON()
-		return
-	}
+// 	if slot, err = p.Service.Delete(slot.ID); err != nil {
+// 		resp.Error(err).JSON()
+// 		return
+// 	}
 
-	resp.Record(accounting.DeleteSlot, slot)
-	resp.Status(http.StatusOK).
-		MessageT(corterm.VDeletedSuccessfully, accterm.Slot).
-		JSON()
-}
+// 	resp.Record(accounting.DeleteSlot, slot)
+// 	resp.Status(http.StatusOK).
+// 		MessageT(corterm.VDeletedSuccessfully, accterm.Slot).
+// 		JSON()
+// }
 
 // Excel generate excel files based on search
 func (p *SlotAPI) Excel(c *gin.Context) {

@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"omega/domain/accounting/accmodel"
 	"omega/domain/accounting/accrepo"
+	"omega/internal/consts"
 	"omega/internal/core"
 	"omega/internal/core/coract"
 	"omega/internal/core/corerr"
 	"omega/internal/param"
 	"omega/internal/types"
 	"omega/pkg/glog"
+	"time"
 )
 
 // AccTranServ for injecting auth accrepo
@@ -52,51 +54,107 @@ func (p *AccTranServ) List(params param.Param) (trans []accmodel.Tran,
 	return
 }
 
+// Transfer is useually used for send money from one account to another
+func (p *AccTranServ) Transfer(tran accmodel.Tran) (createdTran accmodel.Tran, err error) {
+	var slots []accmodel.Slot
+
+	pioneer := accmodel.Slot{
+		AccountID: tran.PioneerID,
+		Debit:     tran.Amount,
+		StockID:   tran.StockID,
+	}
+	slots = append(slots, pioneer)
+
+	follower := accmodel.Slot{
+		AccountID: tran.FollowerID,
+		Credit:    tran.Amount,
+		StockID:   tran.StockID,
+	}
+	slots = append(slots, follower)
+
+	createdTran, err = p.Create(tran, slots)
+
+	return
+}
+
 // Create a tran
-func (p *AccTranServ) Create(tran accmodel.Tran) (createdTran accmodel.Tran, err error) {
+func (p *AccTranServ) Create(tran accmodel.Tran,
+	slots []accmodel.Slot) (createdTran accmodel.Tran, err error) {
 
 	if err = tran.Validate(coract.Save); err != nil {
 		err = corerr.TickValidate(err, "E6771623", "validation failed in creating the tran", tran)
 		return
 	}
 
-	if createdTran, err = p.Repo.Create(tran); err != nil {
+	clonedEngine := p.Engine.Clone()
+	clonedEngine.DB = clonedEngine.DB.Begin()
+
+	defer func() {
+		if r := recover(); r != nil {
+			glog.LogError(fmt.Errorf("panic happened in transaction mode for %v",
+				"users table"), "rollback recover create user")
+			clonedEngine.DB.Rollback()
+		}
+	}()
+
+	tranRepo := accrepo.ProvideTranRepo(clonedEngine)
+	slotServ := ProvideAccSlotService(accrepo.ProvideSlotRepo(clonedEngine))
+	_, _ = tranRepo, slotServ
+
+	now := time.Now()
+	tran.Hash = now.Format(consts.HashTimeLayout)
+
+	if createdTran, err = tranRepo.Create(tran); err != nil {
 		err = corerr.Tick(err, "E6759336", "tran not created", tran)
+
+		clonedEngine.DB.Rollback()
 		return
 	}
+
+	for _, v := range slots {
+		v.TranID = createdTran.ID
+		if _, err = slotServ.Create(v); err != nil {
+			err = corerr.Tick(err, "E6724009", "slot not saved in transaction creation", tran)
+
+			clonedEngine.DB.Rollback()
+			return
+		}
+	}
+
+	clonedEngine.DB.Commit()
 
 	return
 }
 
 // Save a tran, if it is exist update it, if not create it
-func (p *AccTranServ) Save(tran accmodel.Tran) (savedTran accmodel.Tran, err error) {
-	if err = tran.Validate(coract.Save); err != nil {
-		err = corerr.TickValidate(err, "E6751314", corerr.ValidationFailed, tran)
-		return
-	}
+// func (p *AccTranServ) Save(tran accmodel.Tran) (savedTran accmodel.Tran, err error) {
+// 	if err = tran.Validate(coract.Save); err != nil {
+// 		err = corerr.TickValidate(err, "E6751314", corerr.ValidationFailed, tran)
+// 		return
+// 	}
 
-	if savedTran, err = p.Repo.Save(tran); err != nil {
-		err = corerr.Tick(err, "E6737536", "tran not saved")
-		return
-	}
+// 	if savedTran, err = p.Repo.Save(tran); err != nil {
+// 		err = corerr.Tick(err, "E6737536", "tran not saved")
+// 		return
+// 	}
 
-	return
-}
+// 	return
+// }
 
 // Delete tran, it is soft delete
-func (p *AccTranServ) Delete(tranID types.RowID) (tran accmodel.Tran, err error) {
-	if tran, err = p.FindByID(tranID); err != nil {
-		err = corerr.Tick(err, "E6753169", "tran not found for deleting")
-		return
-	}
+// func (p *AccTranServ) Delete(tranID types.RowID) (tran accmodel.Tran, err error) {
+// 	if tran, err = p.FindByID(tranID); err != nil {
+// 		err = corerr.Tick(err, "E6753169", "tran not found for deleting")
+// 		return
+// 	}
 
-	if err = p.Repo.Delete(tran); err != nil {
-		err = corerr.Tick(err, "E6795168", "tran not deleted")
-		return
-	}
+// 	if err = p.Repo.Delete(tran); err != nil {
+// 		err = corerr.Tick(err, "E6795168", "tran not deleted")
+// 		return
+// 	}
 
-	return
-}
+// 	return
+// }
 
 // Excel is used for export excel file
 func (p *AccTranServ) Excel(params param.Param) (trans []accmodel.Tran, err error) {

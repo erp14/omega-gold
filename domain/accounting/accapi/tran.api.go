@@ -67,7 +67,7 @@ func (p *TranAPI) List(c *gin.Context) {
 
 // Create tran
 func (p *TranAPI) Create(c *gin.Context) {
-	resp := response.New(p.Engine, c, accounting.Domain)
+	resp, params := response.NewParam(p.Engine, c, accterm.Trans, accounting.Domain)
 	var tran, createdTran accmodel.Tran
 	var err error
 
@@ -76,8 +76,9 @@ func (p *TranAPI) Create(c *gin.Context) {
 	}
 
 	tran.Type = trantype.Manual
+	tran.CreatedBy = params.UserID
 
-	if createdTran, err = p.Service.Create(tran); err != nil {
+	if createdTran, err = p.Service.Transfer(tran); err != nil {
 		resp.Error(err).JSON()
 		return
 	}
@@ -89,56 +90,56 @@ func (p *TranAPI) Create(c *gin.Context) {
 }
 
 // Update tran
-func (p *TranAPI) Update(c *gin.Context) {
-	resp := response.New(p.Engine, c, accounting.Domain)
-	var err error
+// func (p *TranAPI) Update(c *gin.Context) {
+// 	resp := response.New(p.Engine, c, accounting.Domain)
+// 	var err error
 
-	var tran, tranBefore, tranUpdated accmodel.Tran
+// 	var tran, tranBefore, tranUpdated accmodel.Tran
 
-	if tran.ID, err = resp.GetRowID(c.Param("tranID"), "E6723735", accterm.Tran); err != nil {
-		return
-	}
+// 	if tran.ID, err = resp.GetRowID(c.Param("tranID"), "E6723735", accterm.Tran); err != nil {
+// 		return
+// 	}
 
-	if err = resp.Bind(&tran, "E6730030", accounting.Domain, accterm.Tran); err != nil {
-		return
-	}
+// 	if err = resp.Bind(&tran, "E6730030", accounting.Domain, accterm.Tran); err != nil {
+// 		return
+// 	}
 
-	if tranBefore, err = p.Service.FindByID(tran.ID); err != nil {
-		resp.Error(err).JSON()
-		return
-	}
+// 	if tranBefore, err = p.Service.FindByID(tran.ID); err != nil {
+// 		resp.Error(err).JSON()
+// 		return
+// 	}
 
-	if tranUpdated, err = p.Service.Save(tran); err != nil {
-		resp.Error(err).JSON()
-		return
-	}
+// 	if tranUpdated, err = p.Service.Save(tran); err != nil {
+// 		resp.Error(err).JSON()
+// 		return
+// 	}
 
-	resp.Record(accounting.UpdateTran, tranBefore, tran)
-	resp.Status(http.StatusOK).
-		MessageT(corterm.VUpdatedSuccessfully, accterm.Tran).
-		JSON(tranUpdated)
-}
+// 	resp.Record(accounting.UpdateTran, tranBefore, tran)
+// 	resp.Status(http.StatusOK).
+// 		MessageT(corterm.VUpdatedSuccessfully, accterm.Tran).
+// 		JSON(tranUpdated)
+// }
 
 // Delete tran
-func (p *TranAPI) Delete(c *gin.Context) {
-	resp := response.New(p.Engine, c, accounting.Domain)
-	var err error
-	var tran accmodel.Tran
+// func (p *TranAPI) Delete(c *gin.Context) {
+// 	resp := response.New(p.Engine, c, accounting.Domain)
+// 	var err error
+// 	var tran accmodel.Tran
 
-	if tran.ID, err = resp.GetRowID(c.Param("tranID"), "E6744186", accterm.Tran); err != nil {
-		return
-	}
+// 	if tran.ID, err = resp.GetRowID(c.Param("tranID"), "E6744186", accterm.Tran); err != nil {
+// 		return
+// 	}
 
-	if tran, err = p.Service.Delete(tran.ID); err != nil {
-		resp.Error(err).JSON()
-		return
-	}
+// 	if tran, err = p.Service.Delete(tran.ID); err != nil {
+// 		resp.Error(err).JSON()
+// 		return
+// 	}
 
-	resp.Record(accounting.DeleteTran, tran)
-	resp.Status(http.StatusOK).
-		MessageT(corterm.VDeletedSuccessfully, accterm.Tran).
-		JSON()
-}
+// 	resp.Record(accounting.DeleteTran, tran)
+// 	resp.Status(http.StatusOK).
+// 		MessageT(corterm.VDeletedSuccessfully, accterm.Tran).
+// 		JSON()
+// }
 
 // Excel generate excel files based on search
 func (p *TranAPI) Excel(c *gin.Context) {

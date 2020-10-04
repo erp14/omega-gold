@@ -5,6 +5,8 @@
 	"payload": {
 		"pioneer_id": 1,
 		"follower_id": 2,
-		"description": "this is description"
+		"description": "-",
+		"stock_id": 1,
+		"amount": 233.5
 	}
 }

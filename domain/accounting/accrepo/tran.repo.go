@@ -83,14 +83,14 @@ func (p *TranRepo) Count(params param.Param) (count uint64, err error) {
 }
 
 // Save the tran, in case it is not exist create it
-func (p *TranRepo) Save(tran accmodel.Tran) (u accmodel.Tran, err error) {
-	if err = p.Engine.DB.Table(accmodel.TranTable).Save(&tran).Error; err != nil {
-		err = p.dbError(err, "E6716310", tran, corterm.Updated)
-	}
+// func (p *TranRepo) Save(tran accmodel.Tran) (u accmodel.Tran, err error) {
+// 	if err = p.Engine.DB.Table(accmodel.TranTable).Save(&tran).Error; err != nil {
+// 		err = p.dbError(err, "E6716310", tran, corterm.Updated)
+// 	}
 
-	p.Engine.DB.Table(accmodel.TranTable).Where("id = ?", tran.ID).Find(&u)
-	return
-}
+// 	p.Engine.DB.Table(accmodel.TranTable).Where("id = ?", tran.ID).Find(&u)
+// 	return
+// }
 
 // Create a tran
 func (p *TranRepo) Create(tran accmodel.Tran) (u accmodel.Tran, err error) {
@@ -101,12 +101,12 @@ func (p *TranRepo) Create(tran accmodel.Tran) (u accmodel.Tran, err error) {
 }
 
 // Delete the tran
-func (p *TranRepo) Delete(tran accmodel.Tran) (err error) {
-	if err = p.Engine.DB.Table(accmodel.TranTable).Unscoped().Delete(&tran).Error; err != nil {
-		err = p.dbError(err, "E6775100", tran, corterm.Deleted)
-	}
-	return
-}
+// func (p *TranRepo) Delete(tran accmodel.Tran) (err error) {
+// 	if err = p.Engine.DB.Table(accmodel.TranTable).Unscoped().Delete(&tran).Error; err != nil {
+// 		err = p.dbError(err, "E6775100", tran, corterm.Deleted)
+// 	}
+// 	return
+// }
 
 // dbError is an internal method for generate proper database error
 func (p *TranRepo) dbError(err error, code string, tran accmodel.Tran, action string) error {
