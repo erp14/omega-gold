@@ -1,0 +1,13 @@
+{
+  "method":"post",
+  "url":"_URL_/register",
+  "payload": {
+    "name": "Saman Ahmed Rzgar",
+    "username": "saman",
+    "password": "12345678",
+    "lang":"ku",
+    "email":"saman@gmail.com"
+  }
+}
+
+

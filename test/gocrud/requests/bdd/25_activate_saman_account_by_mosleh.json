@@ -1,0 +1,11 @@
+{
+  "method":"put",
+  "url":"_URL_/accounts/16",
+  "authorization":"Bearer _TOKEN_CASHIER_",
+  "payload": {
+    "name": "Saman Ahemd Rzgar",
+    "type":"trader",
+    "status":"active"
+  }
+}
+

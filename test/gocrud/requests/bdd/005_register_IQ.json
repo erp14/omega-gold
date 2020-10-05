@@ -1,0 +1,13 @@
+{
+  "method":"post",
+  "url":"_URL_/register",
+  "authorization":"Bearer _TOKEN_",
+  "payload": {
+    "name": "IQ Online",
+    "username": "iq",
+    "password": "12345678",
+    "lang":"ku",
+    "email":"info@iqonline.com"
+  }
+}
+

@@ -36,26 +36,26 @@ func InsertStocks(engine *core.Engine) {
 			Code:        "USD-V",
 			Description: "usd cash for trades",
 		},
-		{
-			GormCol: types.GormCol{
-				ID: 3,
-			},
-			Name:        "IQ Gold-18",
-			Type:        stocktype.Gold,
-			Symbol:      "G18",
-			Code:        "IQ-G18",
-			Description: "gold 18",
-		},
-		{
-			GormCol: types.GormCol{
-				ID: 4,
-			},
-			Name:        "IQ Gold-24",
-			Type:        stocktype.Gold,
-			Symbol:      "G24",
-			Code:        "IQ-G24",
-			Description: "gold 24",
-		},
+		// {
+		// 	GormCol: types.GormCol{
+		// 		ID: 3,
+		// 	},
+		// 	Name:        "IQ Gold-18",
+		// 	Type:        stocktype.Gold,
+		// 	Symbol:      "G18",
+		// 	Code:        "IQ-G18",
+		// 	Description: "gold 18",
+		// },
+		// {
+		// 	GormCol: types.GormCol{
+		// 		ID: 4,
+		// 	},
+		// 	Name:        "IQ Gold-24",
+		// 	Type:        stocktype.Gold,
+		// 	Symbol:      "G24",
+		// 	Code:        "IQ-G24",
+		// 	Description: "gold 24",
+		// },
 	}
 
 	for _, v := range stocks {

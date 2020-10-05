@@ -257,6 +257,11 @@ en = 'username or password is wrong'
 ku = 'username yan passwordakat halaya'
 ar = 'username or password is wrong'
 
+["default role_id is not valid, update settings"]
+en = 'default role_id is not valid, update settings'
+ku = 'role_id xazn kraw la setting halaya, abe raqam be'
+ar = 'default role_id is not valid, update settings'
+
 # base/message/basterm/terms.msg.go -----------------------------------------------------
 [user]
 en = 'user'
@@ -277,6 +282,16 @@ ar = 'setting'
 en = 'settings'
 ku = 'rekxstnakan'
 ar = 'settings'
+
+[account]
+en = 'account'
+ku = 'hazhmar'
+ar = 'account'
+
+[accounts]
+en = 'accounts'
+ku = 'hazhmarakan'
+ar = 'accounts'
 
 ["user loged in successfully"]
 en = 'user loged in successfully'

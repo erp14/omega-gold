@@ -101,6 +101,6 @@ func (p *AuthAPI) Register(c *gin.Context) {
 
 	resp.RecordCreate(base.Register, createdUser)
 	resp.Status(http.StatusOK).
-		Message(basterm.UserRegisteredSuccessfully).
+		MessageT(basterm.UserRegisteredSuccessfully).
 		JSON(user)
 }

@@ -1,0 +1,14 @@
+{
+  "method":"post",
+  "url":"_URL_/users",
+  "authorization":"Bearer _TOKEN_",
+  "payload": {
+    "role_id":2,
+    "name": "Mosleh",
+    "username": "mosleh",
+    "password": "123456789",
+    "lang":"ku",
+    "email":"mosleh.taha@gmail.com"
+  }
+}
+

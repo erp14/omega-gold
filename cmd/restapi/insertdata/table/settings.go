@@ -67,7 +67,7 @@ func InsertSettings(engine *core.Engine) {
 				ID: 6,
 			},
 			Property:    base.DefaultRegisteredRole,
-			Value:       "diako",
+			Value:       "4",
 			Type:        "number",
 			Description: "after people register they role_id should equal to 4 which is 'registered'",
 		},

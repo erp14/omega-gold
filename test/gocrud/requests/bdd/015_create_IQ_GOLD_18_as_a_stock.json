@@ -1,0 +1,12 @@
+{
+  "method":"post",
+	"url":"_URL_/stocks",
+	"authorization":"Bearer _TOKEN_",
+	"payload": {
+		"name": "IQ Gold-18",
+		"type": "gold",
+		"Symbol": "G18",
+		"Code": "IQ-G18",
+		"description": "gold provided by IQ"
+	}
+}

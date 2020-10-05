@@ -11,6 +11,7 @@ import (
 	"omega/internal/core/corerr"
 	"omega/internal/param"
 	"omega/internal/types"
+	"omega/pkg/glog"
 	"omega/pkg/limberr"
 	"omega/pkg/password"
 	"time"
@@ -112,13 +113,12 @@ func (p *BasAuthServ) TemporaryToken(params param.Param) (tmpKey string, err err
 // Register will create a user with minumum permission
 func (p *BasAuthServ) Register(user basmodel.User) (createdUser basmodel.User, err error) {
 	userServ := ProvideBasUserService(basrepo.ProvideUserRepo(p.Engine))
-	// engine.Setting[types.Setting(v.Property)]
 
 	if user.RoleID, err = types.StrToRowID(p.Engine.Setting[base.DefaultRegisteredRole].Value); err != nil {
-		err = limberr.New("default role_id for registration is not a number", "E1021908").
-			Mess
-		age("default role_id is not valid").
+		err = limberr.New(`default_registered_role is not a number`, "E1021908").
+			Message(baserr.DefaultRoleIDisNotValidUpdateSettings).
 			Custom(corerr.InternalServerErr).Build()
+		glog.LogError(err, "update settings and put number for default_registered_role")
 
 		return
 	}

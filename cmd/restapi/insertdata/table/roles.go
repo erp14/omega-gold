@@ -40,6 +40,7 @@ func InsertRoles(engine *core.Engine) {
 			Name: "Cashier",
 			Resources: types.ResourceJoin([]types.Resource{
 				base.ActivitySelf,
+				base.AccountRead, base.AccountWrite, base.AccountExcel,
 			}),
 			Description: "cashier has privileges for adding transactions - after migration reset",
 		},
@@ -60,11 +61,21 @@ func InsertRoles(engine *core.Engine) {
 			GormCol: types.GormCol{
 				ID: 4,
 			},
-			Name: "Registered",
+			Name: "Trader",
 			Resources: types.ResourceJoin([]types.Resource{
 				base.UserRead,
 			}),
-			Description: "permission after register to the system",
+			Description: "traders have privileges to buy/sell goods, if they activated",
+		},
+		{
+			GormCol: types.GormCol{
+				ID: 5,
+			},
+			Name: "Provider",
+			Resources: types.ResourceJoin([]types.Resource{
+				base.UserRead,
+			}),
+			Description: "provider can sell in negative mode for balance",
 		},
 	}
 
